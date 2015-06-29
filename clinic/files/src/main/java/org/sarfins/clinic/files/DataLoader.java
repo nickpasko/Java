@@ -27,7 +27,7 @@ public class DataLoader {
     private static ElementCollection loadTemplates() {
         Map<String, IHaveName> templatesMap = new HashMap<String, IHaveName>();
         try {
-            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\clinic\\templates.tsv");
+            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\templates.tsv");
             BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
             try {
                 String s;
@@ -53,7 +53,7 @@ public class DataLoader {
     private static ElementCollection loadRoles() {
         Map<String, IHaveName> rolesMap = new HashMap<String, IHaveName>();
         try {
-            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\clinic\\roles.tsv");
+            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\roles.tsv");
             BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
             try {
                 String s;
@@ -75,7 +75,7 @@ public class DataLoader {
     private static ElementCollection loadPersons() {
         Map<String, IHaveName> personsMap = new HashMap<String, IHaveName>();
         try {
-            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\clinic\\persons.tsv");
+            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\persons.tsv");
             BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
             try {
                 String s;

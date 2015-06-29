@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Yakov on 26.04.2015.
  */
-public class Template implements IHaveName {
+public class Template implements IHaveName, IHaveList {
     public String title;
     public List<Role> participants = new ArrayList<Role>();
     public String taskType = "Template";
@@ -36,5 +36,20 @@ public class Template implements IHaveName {
 
     public List <Role> getParticipants() {
         return participants;
+    }
+
+    @Override
+    public List getList() {
+        return participants;
+    }
+
+    @Override
+    public void addRole(IHaveList element) {
+        participants.add((Role) element);
+    }
+
+    @Override
+    public void deleteRole(IHaveList element) {
+        participants.remove(element);
     }
 }

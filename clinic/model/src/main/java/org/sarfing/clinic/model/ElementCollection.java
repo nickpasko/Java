@@ -42,11 +42,15 @@ public class ElementCollection {
         return (String)elementsArr[inputNumber - 1];
     }
 
-    public void renameElement(ElementCollection elements, String oldName, String newName) {
-        IHaveName elem = elements.get(oldName);
+    public void renameElement(String oldName, String newName) {
+        IHaveName elem = map.get(oldName);
         elem.setName(newName);
-        elements.remove(oldName);
-        elements.put(newName, elem);
+        map.remove(oldName);
+        map.put(newName, elem);
 
+    }
+
+    public IHaveName getElementByName(String name) {
+        return map.get(name);
     }
 }

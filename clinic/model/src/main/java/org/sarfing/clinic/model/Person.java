@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Yakov on 26.04.2015.
  */
-public class Person implements IHaveName {
+public class Person implements IHaveName, IHaveList {
     public String name;
     public List <Role> roles;
     public List<Timetable>timetables;
@@ -34,5 +34,20 @@ public class Person implements IHaveName {
     @Override
     public void setName(String newName) {
         name = newName;
+    }
+
+    @Override
+    public List getList() {
+        return roles;
+    }
+
+    @Override
+    public void addRole(Role element) {
+        roles.add(element);
+    }
+
+    @Override
+    public void deleteRole(Role element) {
+        roles.remove(element);
     }
 }

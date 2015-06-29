@@ -71,14 +71,10 @@ public class SubMenuCycle {
         String inputString = scanner.nextLine();
         int inputNumber = Integer.parseInt(inputString);
         String oldName = elements.getName(inputNumber);
-        System.out.println(String.format("Вы действительно хотите редактировать человека номер %d по имени %s?", inputNumber, oldName));
-        String inputNumberConfirm = scanner.nextLine();
-        if(inputNumberConfirm.equals("1")) {
-            System.out.println("Введите новое имя:");
-            String newName = scanner.nextLine();
-            elements.renameElement(elements, oldName, newName);
-            cycleInfo = listElements(elements);
-        }
+        System.out.println(String.format("Вы действительно хотите редактировать человека номер %d по имени %s? (1/0)", inputNumber, oldName));
+
+        ListElementCycle editListCycle = new ListElementCycle(elements.getElementByName(oldName), elements);
+        editListCycle.run();
         // ask for a number of element to delete
         // where 0 == cancel
         // delete this element from Map, or exit if 0
@@ -99,7 +95,7 @@ public class SubMenuCycle {
         String inputString = scanner.nextLine();
         int inputNumber = Integer.parseInt(inputString);
         String key = elements.getName(inputNumber);
-        System.out.println(String.format("Вы действительно хотите удалить человека номер %d по имени %s?", inputNumber, key));
+        System.out.println(String.format("Вы действительно хотите удалить человека номер %d по имени %s? (1/0)", inputNumber, key));
         String inputNumberConfirm = scanner.nextLine();
         if(inputNumberConfirm.equals("1")) {
             elements.remove(key);
@@ -128,9 +124,10 @@ public class SubMenuCycle {
         }
         return UserOption.Undefined;
     }
+
     public String listElements(ElementCollection elements) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Список ролей в системе:");
+        sb.append("Список элементов в системе:");
         sb.append("\r\n");
         for(IHaveName element : elements.values()) {
             sb.append(element.getName());
@@ -143,7 +140,7 @@ public class SubMenuCycle {
         sb.append("\r\n");
         sb.append("3 - удалить");
         sb.append("\r\n");
-        sb.append("4 - выход");
+        sb.append("0 - выход");
         sb.append("\r\n");
         return sb.toString();
     }

@@ -46,10 +46,12 @@ public class Template implements IHaveName, IHaveList {
     @Override
     public void addRole(IHaveList element) {
         participants.add((Role) element);
+        System.out.println("Элемент добавлен!");
     }
 
     @Override
     public void deleteRole(IHaveList element) {
-        participants.remove(element);
+        participants.remove((Role) element);
+        System.out.println("Элемент удален!");
     }
 }

@@ -42,12 +42,14 @@ public class Person implements IHaveName, IHaveList {
     }
 
     @Override
-    public void addRole(Role element) {
-        roles.add(element);
+    public void addRole(IHaveList element) {
+        roles.add((Role) element);
+        System.out.println("Элемент добавлен!");
     }
 
     @Override
-    public void deleteRole(Role element) {
-        roles.remove(element);
+    public void deleteRole(IHaveList element) {
+        roles.remove((Role) element);
+        System.out.println("Элемент удален!");
     }
 }

@@ -7,6 +7,6 @@ import java.util.List;
  */
 public interface IHaveList {
     public List getList();
-    public void addRole(Role element);
-    public void deleteRole(Role element);
+    public void addRole(IHaveList element);
+    public void deleteRole(IHaveList element);
 }

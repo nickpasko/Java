@@ -19,6 +19,7 @@ public class ListElementCycle {
     }
 
     public void run() {
+        cycleInfo = listElements();
         while(true) {
             System.out.printf(cycleInfo);
             UserOption option = readOption();
@@ -38,7 +39,7 @@ public class ListElementCycle {
         }
     }
 
-    public String listElements(ElementCollection elements) {
+    public String listElements() {
         StringBuilder sb = new StringBuilder();
         sb.append("Список элементов в системе:");
         sb.append("\r\n");
@@ -91,7 +92,7 @@ public class ListElementCycle {
             System.out.println("Введите новое имя:");
             String newName = scanner.nextLine();
             elements.renameElement(element.getName(), newName);
-            cycleInfo = listElements(elements);
+            cycleInfo = listElements();
         }
     }
 
@@ -100,7 +101,8 @@ public class ListElementCycle {
             System.out.println("Для данного типа элементов нельзя поменять список!");
             return;
         }
-        ((IHaveList) element).addRole((Role) element);
+        ((IHaveList) element).addRole((IHaveList) element);
+        cycleInfo = listElements();
     }
 
     private void deleteListElement(ElementCollection elements) {
@@ -108,6 +110,7 @@ public class ListElementCycle {
             System.out.println("Для данного типа элементов нельзя поменять список!");
             return;
         }
-        ((IHaveList) element).deleteRole((Role) element);
+        ((IHaveList) element).deleteRole((IHaveList) element);
+        cycleInfo = listElements();
     }
 }

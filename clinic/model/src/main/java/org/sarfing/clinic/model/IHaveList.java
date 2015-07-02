@@ -6,7 +6,7 @@ import java.util.List;
  * Created by Yakov on 29.06.2015.
  */
 public interface IHaveList {
-    public List getList();
-    public void addRole(IHaveList element);
-    public void deleteRole(IHaveList element);
+    public List<Role> getList();
+    public void addRole(IHaveName element);
+    public void deleteRole(IHaveName element);
 }

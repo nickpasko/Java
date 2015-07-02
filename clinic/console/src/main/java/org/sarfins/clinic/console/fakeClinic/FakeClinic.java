@@ -31,13 +31,13 @@ public class FakeClinic {
                 break;
             }
             if (inputString.equals("1")) {
-                subCycle.run(roster.roles);
+                subCycle.run(roster.roles, roster.roles);
             }
             else if (inputString.equals("2")) {
-                subCycle.run(roster.persons);
+                subCycle.run(roster.persons, roster.roles);
             }
             else if (inputString.equals("3")) {
-                subCycle.run(roster.templates);
+                subCycle.run(roster.templates, roster.roles);
             }
             else if (inputString.equals("4")) {
                 saveData(roster);

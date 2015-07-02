@@ -12,9 +12,11 @@ import java.util.*;
  */
 public class SubMenuCycle {
     private String cycleInfo;
+    private ElementCollection roles;
 
-    public void run(ElementCollection elements) {
+    public void run(ElementCollection elements, ElementCollection roles) {
         cycleInfo = listElements(elements);
+        this.roles = roles;
         while(true) {
             System.out.printf(cycleInfo);
             UserOption option = readOption();
@@ -71,9 +73,8 @@ public class SubMenuCycle {
         String inputString = scanner.nextLine();
         int inputNumber = Integer.parseInt(inputString);
         String oldName = elements.getName(inputNumber);
-        System.out.println(String.format("Вы действительно хотите редактировать человека номер %d по имени %s? (1/0)", inputNumber, oldName));
 
-        ListElementCycle editListCycle = new ListElementCycle(elements.getElementByName(oldName), elements);
+        ListElementCycle editListCycle = new ListElementCycle(elements.getElementByName(oldName), elements, roles);
         editListCycle.run();
         // ask for a number of element to delete
         // where 0 == cancel

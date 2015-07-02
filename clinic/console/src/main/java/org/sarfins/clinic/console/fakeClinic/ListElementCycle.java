@@ -2,7 +2,6 @@ package org.sarfins.clinic.console.fakeClinic;
 
 import org.sarfing.clinic.model.*;
 
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -11,15 +10,17 @@ import java.util.Scanner;
 public class ListElementCycle {
     private String cycleInfo;
     private IHaveName element;
-    private ElementCollection elements;
+    private ElementCollection parentCollection;
+    private ElementCollection roles;
 
-    public ListElementCycle(IHaveName element, ElementCollection elements) {
+    public ListElementCycle(IHaveName element, ElementCollection parentCollection, ElementCollection roles) {
         this.element = element;
-        this.elements = elements;
+        this.parentCollection = parentCollection;
+        this.roles = roles;
     }
 
     public void run() {
-        cycleInfo = listElements();
+        cycleInfo = elementDescription();
         while(true) {
             System.out.printf(cycleInfo);
             UserOption option = readOption();
@@ -28,10 +29,10 @@ public class ListElementCycle {
                     editName();
                     break;
                 case AddElement:
-                    addListElement();
+                    addRoleToElement();
                     break;
                 case DeleteElement:
-                    deleteListElement(elements);
+                    deleteRoleFromElement();
                     break;
                 case Quit:
                     return;
@@ -39,20 +40,26 @@ public class ListElementCycle {
         }
     }
 
-    public String listElements() {
+    public String elementDescription() {
+
         StringBuilder sb = new StringBuilder();
-        sb.append("Список элементов в системе:");
+        sb.append(String.format("Элемент %s:", element.getName()));
         sb.append("\r\n");
-        for(IHaveName element : elements.values()) {
-            sb.append(element.getName());
-            sb.append(" ");
+        if(element instanceof IHaveList) {
+            sb.append(String.format("Список ролей элемента:"));
+            IHaveList temp = (IHaveList) element;
+            for (IHaveName role : temp.getList()) {
+                sb.append(role.getName());
+                sb.append(" ");
+            }
+            sb.append("\r\n");
         }
-        sb.append("\r\n");
+
         sb.append("1 - редактировать имя");
         sb.append("\r\n");
-        sb.append("2 - добавить элемент в список");
+        sb.append("2 - добавить роль в список");
         sb.append("\r\n");
-        sb.append("3 - удалить элемент из списка");
+        sb.append("3 - удалить роль из списка");
         sb.append("\r\n");
         sb.append("0 - выход");
         sb.append("\r\n");
@@ -91,26 +98,63 @@ public class ListElementCycle {
         if(inputNumberConfirm.equals("1")) {
             System.out.println("Введите новое имя:");
             String newName = scanner.nextLine();
-            elements.renameElement(element.getName(), newName);
-            cycleInfo = listElements();
+            parentCollection.renameElement(element.getName(), newName);
+            cycleInfo = elementDescription();
         }
     }
 
-    private void addListElement() {
+    private void addRoleToElement() {
         if(!(element instanceof IHaveList)) {
             System.out.println("Для данного типа элементов нельзя поменять список!");
             return;
         }
-        ((IHaveList) element).addRole((IHaveList) element);
-        cycleInfo = listElements();
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        for(IHaveName role : roles.values()) {
+            sb.append(String.format("%d. ", i++));
+            sb.append(role.getName());
+            sb.append("\r\n");
+        }
+        System.out.print(sb.toString());
+        System.out.println("Введите номер элемента, который хотите добавить:");
+        Scanner scanner = new Scanner(System.in);
+        String inputString = scanner.nextLine();
+        int inputNumber = Integer.parseInt(inputString);
+        String key = roles.getName(inputNumber);
+        System.out.println(String.format("Вы действительно хотите добавить роль %s?(1/0)", key));
+        String inputNumberConfirm = scanner.nextLine();
+        if(inputNumberConfirm.equals("1")) {
+            ((IHaveList) element).addRole(roles.get(key));
+            System.out.println(String.format("Роль %s была добавлена", key));
+            cycleInfo = elementDescription();
+        }
     }
 
-    private void deleteListElement(ElementCollection elements) {
+    private void deleteRoleFromElement() {
         if(!(element instanceof IHaveList)) {
             System.out.println("Для данного типа элементов нельзя поменять список!");
             return;
         }
-        ((IHaveList) element).deleteRole((IHaveList) element);
-        cycleInfo = listElements();
+        StringBuilder sb = new StringBuilder();
+        // list all elements with corresponding numbers (1-N)
+        int i = 1;
+        for(IHaveName role : ((IHaveList) element).getList()) {
+            sb.append(String.format("%d. ", i++));
+            sb.append(role.getName());
+            sb.append("\r\n");
+        }
+        System.out.print(sb.toString());
+        System.out.println("Введите номер элемента, который хотите удалить:");
+        Scanner scanner = new Scanner(System.in);
+        String inputString = scanner.nextLine();
+        int inputNumber = Integer.parseInt(inputString);
+        String key = roles.getName(inputNumber);
+        System.out.println(String.format("Вы действительно хотите удалить роль %s? (1/0)", key));
+        String inputNumberConfirm = scanner.nextLine();
+        if(inputNumberConfirm.equals("1")) {
+            ((IHaveList) element).deleteRole(roles.get(key));
+            System.out.println(String.format("Роль %s была удалена", key));
+            cycleInfo = elementDescription();
+        }
     }
 }

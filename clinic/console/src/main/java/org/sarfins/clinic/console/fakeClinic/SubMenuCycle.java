@@ -46,8 +46,8 @@ public class SubMenuCycle {
             return;
         }
 
-        ElementType type = elements.values().iterator().next().getType();
-        IHaveName newElement = ElementCreator.createElement(type, inputString);
+        //ElementType type = elements.values().iterator().next().getType();
+        IHaveName newElement = ElementCreator.createElement(elements.type, inputString);
         elements.put(inputString, newElement);
         try {
             System.out.println(String.format("Элемент %s был добавлен", newElement.getName()));

@@ -5,10 +5,16 @@ package org.sarfing.clinic.model;
  */
 public class Role implements IHaveName {
     public String name;
+    public Boolean isWorkerRole = false;
 
 
-    public Role(String name) {
+    public Role(String name, Boolean isWorkerRole) {
         this.name = name;
+        this.isWorkerRole = isWorkerRole;
+    }
+
+    public Boolean getStatus() {
+        return isWorkerRole;
     }
 
     @Override

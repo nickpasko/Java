@@ -51,22 +51,23 @@ public class FakeClinic {
         }
     }
 
-    private static Roster loadData() {
+    private static Roster loadData() throws IOException {
         try {
             return DataLoader.load();
         }
         catch (IOException e) {
             System.out.println("Ошибка загрузки: " + e.getMessage());
-            return null;
+            throw e;
         }
     }
 
-    private static void saveData(Roster roster) {
+    private static void saveData(Roster roster) throws IOException {
         try {
             DataSaver.save(roster);
         }
         catch (IOException e) {
             System.out.println("Ошибка сохранения: " + e.getMessage());
+            throw e;
         }
     }
 

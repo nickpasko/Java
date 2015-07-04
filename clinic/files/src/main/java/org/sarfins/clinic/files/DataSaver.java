@@ -42,10 +42,14 @@ public class DataSaver {
     }
 
     private static void saveRoles(ElementCollection roles) throws IOException {
+        if(roles.type != ElementType.Role) {
+            throw new IllegalArgumentException();
+        }
         //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\roles.txt"),"UTF-8"));
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\roles.tsv"), false));
         for(IHaveName role: roles.values()) {
             bw.write(role.getName());
+            bw.write("\t" + ((Role) role).getStatus());
             bw.newLine();
         }
         bw.close();

@@ -1,5 +1,6 @@
 package org.sarfins.clinic.files;
 
+import com.sun.media.sound.InvalidFormatException;
 import org.sarfing.clinic.model.*;
 
 import java.io.BufferedReader;
@@ -18,13 +19,15 @@ public class DataLoader {
 
     public static Roster load() throws IOException {
         Roster roster = new Roster();
-        roster.persons = loadPersons();
         roster.roles = loadRoles();
-        roster.templates = loadTemplates();
+        roster.persons = loadPersons(roster.roles);
+        roster.templates = loadTemplates(roster.roles);
         return roster;
     }
 
-    private static ElementCollection loadTemplates() {
+    private static ElementCollection loadTemplates(ElementCollection roles) {
+        if(roles.type != ElementType.Role)
+            throw new IllegalArgumentException(String.format("Ожидается список ролей, а пришел список %s", roles.type));
         Map<String, IHaveName> templatesMap = new HashMap<String, IHaveName>();
         try {
             File file = new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\templates.tsv");
@@ -35,7 +38,9 @@ public class DataLoader {
                     String[] singleVar = s.split("\t");
                     List<Role> rolesList = new ArrayList<Role>();
                     for(int i = 2; i < singleVar.length; i++) {
-                        rolesList.add(new Role(singleVar[i]));
+                        IHaveName tmpRole = roles.getElementByName(singleVar[i]);
+                        if(tmpRole != null)
+                        rolesList.add((Role)(roles.getElementByName(singleVar[i])));
                     }
                     templatesMap.put(singleVar[0], new Template(singleVar[0], singleVar[1], rolesList));
                 }
@@ -58,8 +63,9 @@ public class DataLoader {
             try {
                 String s;
                 while ((s = in.readLine()) != null) {
-                    Role role = new Role(s);
-                    rolesMap.put(s, role);
+                    String[] singleVar = s.split("\t");
+                    Role role = new Role(singleVar[0], singleVar[1] == "true");
+                    rolesMap.put(singleVar[0], role);
                 }
             }
             finally {
@@ -72,7 +78,9 @@ public class DataLoader {
         return new ElementCollection(rolesMap, ElementType.Role);
     }
 
-    private static ElementCollection loadPersons() {
+    private static ElementCollection loadPersons(ElementCollection roles) {
+        if(roles.type != ElementType.Role)
+            throw new IllegalArgumentException(String.format("Ожидается список ролей, а пришел список %s", roles.type));
         Map<String, IHaveName> personsMap = new HashMap<String, IHaveName>();
         try {
             File file = new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\persons.tsv");
@@ -83,7 +91,9 @@ public class DataLoader {
                     String[] singleVar = s.split("\t");
                     List<Role> rolesList = new ArrayList<Role>(singleVar.length - 1);
                     for(int i = 1; i < singleVar.length; i++) { // цикл по ролям в строке
-                        rolesList.add(new Role(singleVar[i]));
+                        IHaveName tmpRole = roles.getElementByName(singleVar[i]);
+                        if(tmpRole != null)
+                            rolesList.add((Role)(roles.getElementByName(singleVar[i])));
                     }
                     Person person = new Person(singleVar[0], rolesList);
                     personsMap.put(singleVar[0], person);

@@ -9,7 +9,7 @@ public class ElementCreator {
     public static IHaveName createElement(ElementType type, String name) {
         switch (type) {
             case Role:
-                return new Role(name);
+                return new Role(name, false);
             case Person:
                 return new Person(name, new ArrayList<Role>());
             case Template:

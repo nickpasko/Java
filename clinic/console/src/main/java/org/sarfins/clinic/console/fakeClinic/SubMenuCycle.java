@@ -2,7 +2,6 @@ package org.sarfins.clinic.console.fakeClinic;
 
 import org.sarfing.clinic.model.ElementCollection;
 import org.sarfing.clinic.model.ElementCreator;
-import org.sarfing.clinic.model.ElementType;
 import org.sarfing.clinic.model.IHaveName;
 
 import java.util.*;
@@ -74,7 +73,7 @@ public class SubMenuCycle {
         int inputNumber = Integer.parseInt(inputString);
         String oldName = elements.getName(inputNumber);
 
-        ListElementCycle editListCycle = new ListElementCycle(elements.getElementByName(oldName), elements, roles);
+        EditElementCycle editListCycle = new EditElementCycle(elements.getElementByName(oldName), elements, roles);
         editListCycle.run();
         // ask for a number of element to delete
         // where 0 == cancel

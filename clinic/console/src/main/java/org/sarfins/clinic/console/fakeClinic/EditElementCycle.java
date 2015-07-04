@@ -7,13 +7,13 @@ import java.util.Scanner;
 /**
  * Created by Yakov on 29.06.2015.
  */
-public class ListElementCycle {
+public class EditElementCycle {
     private String cycleInfo;
     private IHaveName element;
     private ElementCollection parentCollection;
     private ElementCollection roles;
 
-    public ListElementCycle(IHaveName element, ElementCollection parentCollection, ElementCollection roles) {
+    public EditElementCycle(IHaveName element, ElementCollection parentCollection, ElementCollection roles) {
         this.element = element;
         this.parentCollection = parentCollection;
         this.roles = roles;

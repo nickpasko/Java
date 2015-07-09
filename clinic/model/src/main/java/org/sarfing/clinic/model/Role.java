@@ -3,7 +3,7 @@ package org.sarfing.clinic.model;
 /**
  * Created by Yakov on 26.04.2015.
  */
-public class Role implements IHaveName {
+public class Role implements IHaveName, IWorkInClinic {
     public String name;
     public Boolean isWorkerRole = false;
 
@@ -30,5 +30,10 @@ public class Role implements IHaveName {
     @Override
     public void setName(String newName) {
         name = newName;
+    }
+
+    @Override
+    public Boolean isReallyWorking() {
+        return isWorkerRole;
     }
 }

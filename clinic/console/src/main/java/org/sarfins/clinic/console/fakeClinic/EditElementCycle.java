@@ -34,6 +34,10 @@ public class EditElementCycle {
                 case DeleteElement:
                     deleteRoleFromElement();
                     break;
+                case EditTimetables:
+                    EditTimetablesCycle editTimetablesCycle = new EditTimetablesCycle(element);
+                    editTimetablesCycle.run();
+                    break;
                 case Quit:
                     return;
             }
@@ -41,7 +45,6 @@ public class EditElementCycle {
     }
 
     public String elementDescription() {
-
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("Элемент %s:", element.getName()));
         sb.append("\r\n");
@@ -61,6 +64,10 @@ public class EditElementCycle {
         sb.append("\r\n");
         sb.append("3 - удалить роль из списка");
         sb.append("\r\n");
+        if(element instanceof Person) {
+            sb.append("4 - редактировать расписания");
+            sb.append("\r\n");
+        }
         sb.append("0 - выход");
         sb.append("\r\n");
         return sb.toString();
@@ -78,6 +85,9 @@ public class EditElementCycle {
         else if (inputString.equals("3")) {
             return UserOption.DeleteElement;
         }
+        else if (element instanceof Person && inputString.equals("4")) {
+            return UserOption.EditTimetables;
+        }
         else if (inputString.equals("0")) {
             return UserOption.Quit;
         }
@@ -88,6 +98,7 @@ public class EditElementCycle {
         EditName,
         AddElement,
         DeleteElement,
+        EditTimetables,
         Quit,
         Undefined
     }

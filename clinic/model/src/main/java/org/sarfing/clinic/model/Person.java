@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Yakov on 26.04.2015.
  */
-public class Person implements IHaveName, IHaveList {
+public class Person implements IHaveName, IHaveList, IWorkInClinic {
     public String name;
     public List <Role> roles;
     public List<Timetable>timetables;
@@ -15,6 +15,10 @@ public class Person implements IHaveName, IHaveList {
         this.name = name;
         this.roles = roles;
         this.timetables = new ArrayList<Timetable>();
+    }
+
+    public List<Timetable> getTimetables() {
+        return timetables;
     }
 
     @Override
@@ -49,5 +53,15 @@ public class Person implements IHaveName, IHaveList {
     @Override
     public void deleteRole(IHaveName element) {
         roles.remove((Role) element);
+    }
+
+    @Override
+    public Boolean isReallyWorking() {
+        for(Role role: roles) {
+            if(role.isReallyWorking() == true) {
+                return true;
+            }
+        }
+        return false;
     }
 }

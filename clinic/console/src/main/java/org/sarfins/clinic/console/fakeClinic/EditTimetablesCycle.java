@@ -25,10 +25,13 @@ public class EditTimetablesCycle {
             UserOption option = readOption();
             switch (option) {
                 case AddTimetable:
+                    addTimetable();
                     break;
                 case deleteTimetable:
+                    deleteTimetable();
                     break;
                 case EditTimetable:
+                    editTimetable();
                     break;
                 case Quit:
                     return;
@@ -85,5 +88,17 @@ public class EditTimetablesCycle {
         EditTimetable,
         Quit,
         Undefined
+    }
+
+    private void addTimetable() {
+
+    }
+
+    private void deleteTimetable() {
+
+    }
+
+    private void editTimetable() {
+
     }
 }

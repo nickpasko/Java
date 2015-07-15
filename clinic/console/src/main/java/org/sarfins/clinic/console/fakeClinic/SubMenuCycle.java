@@ -12,10 +12,12 @@ import java.util.*;
 public class SubMenuCycle {
     private String cycleInfo;
     private ElementCollection roles;
+    private ElementCollection templates;
 
-    public void run(ElementCollection elements, ElementCollection roles) {
+    public void run(ElementCollection elements, ElementCollection roles, ElementCollection templates) {
         cycleInfo = listElements(elements);
         this.roles = roles;
+        this.templates = templates;
         while(true) {
             System.out.printf(cycleInfo);
             UserOption option = readOption();
@@ -73,7 +75,7 @@ public class SubMenuCycle {
         int inputNumber = Integer.parseInt(inputString);
         String oldName = elements.getName(inputNumber);
 
-        EditElementCycle editListCycle = new EditElementCycle(elements.getElementByName(oldName), elements, roles);
+        EditElementCycle editListCycle = new EditElementCycle(elements.getElementByName(oldName), elements, roles, templates);
         editListCycle.run();
         // ask for a number of element to delete
         // where 0 == cancel

@@ -12,11 +12,13 @@ public class EditElementCycle {
     private IHaveName element;
     private ElementCollection parentCollection;
     private ElementCollection roles;
+    private ElementCollection templates;
 
-    public EditElementCycle(IHaveName element, ElementCollection parentCollection, ElementCollection roles) {
+    public EditElementCycle(IHaveName element, ElementCollection parentCollection, ElementCollection roles, ElementCollection templates) {
         this.element = element;
         this.parentCollection = parentCollection;
         this.roles = roles;
+        this.templates = templates;
     }
 
     public void run() {
@@ -36,7 +38,7 @@ public class EditElementCycle {
                     break;
                 case EditTimetables:
                     EditTimetablesCycle editTimetablesCycle = new EditTimetablesCycle(element);
-                    editTimetablesCycle.run();
+                    editTimetablesCycle.run(templates);
                     break;
                 case Quit:
                     return;
@@ -85,7 +87,7 @@ public class EditElementCycle {
         else if (inputString.equals("3")) {
             return UserOption.DeleteElement;
         }
-        else if (element instanceof Person && inputString.equals("4")) {
+        else if (inputString.equals("4") && element instanceof Person) {
             return UserOption.EditTimetables;
         }
         else if (inputString.equals("0")) {

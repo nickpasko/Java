@@ -64,4 +64,12 @@ public class Person implements IHaveName, IHaveList, IWorkInClinic {
         }
         return false;
     }
+
+    public void addTimetable(Timetable timetable) {
+        timetables.add(timetable);
+    }
+
+    public void deleteTimetable(int index) {
+        timetables.remove(index);
+    }
 }

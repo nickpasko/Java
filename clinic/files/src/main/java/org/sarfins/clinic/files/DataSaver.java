@@ -55,6 +55,18 @@ public class DataSaver {
         bw.close();
     }
 
+    private static void saveTimetables(ElementCollection timetables) throws  IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\timetables.tsv"), false));
+        for(IHaveName timetable: timetables.values()) {
+            bw.write(timetable.getWeekDay());
+            bw.write("\t" + timetable.getStartHour());
+            bw.write("\t" + timetable.getEndHour());
+            bw.write("\t" + timetable.getTemplate().getName());
+            bw.newLine();
+        }
+        bw.close();
+    }
+
     private static void savePersons(ElementCollection persons) throws IOException, ClassCastException {
         //BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\persons.txt"),"UTF-8"));
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\persons.tsv"), false));

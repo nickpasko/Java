@@ -13,6 +13,29 @@ public class Timetable {
         this.template = template;
     }
 
+    public Timetable(String weekDay, int startHour, int endHour, Template template) {
+        this.weekDay = weekDay;
+        this.startHour = startHour;
+        this.endHour = endHour;
+        this.template = template;
+    }
+
+    public Template getTemplate() {
+        return template;
+    }
+
+    public String getWeekDay() {
+        return weekDay;
+    }
+
+    public int getStartHour() {
+        return startHour;
+    }
+
+    public int getEndHour() {
+        return endHour;
+    }
+
     @Override
     public String toString() {
         return String.format("%s, %d-%d: %s", weekDay, startHour, endHour, template.getName());

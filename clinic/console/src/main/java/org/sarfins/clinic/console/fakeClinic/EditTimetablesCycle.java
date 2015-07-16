@@ -128,7 +128,7 @@ public class EditTimetablesCycle {
             sb.append("\r\n");
         }
         System.out.print(sb.toString());
-        System.out.println("Введите номер шаблона, который хотите удалить:");
+        System.out.println("Введите номер расписания, которое хотите удалить:");
         Scanner scanner = new Scanner(System.in);
         String inputString = scanner.nextLine();
         int inputNumber = Integer.parseInt(inputString) - 1;
@@ -142,6 +142,29 @@ public class EditTimetablesCycle {
     }
 
     private void editTimetable() {
-
+        StringBuilder sb = new StringBuilder();
+        int i = 1;
+        for(Timetable timetable : person.getTimetables()) {
+            sb.append(String.format("%d. ", i++));
+            sb.append(timetable.toString());
+            sb.append("\r\n");
+        }
+        System.out.print(sb.toString());
+        System.out.println("Введите номер расписания, которое хотите редактировать:");
+        Scanner scanner = new Scanner(System.in);
+        String inputString = scanner.nextLine();
+        int inputNumber = Integer.parseInt(inputString) - 1;
+        System.out.println("Введите день недели:");
+        String newWeekDay = scanner.nextLine();
+        System.out.println("Введите время начала:");
+        int newStartHour = Integer.parseInt(scanner.nextLine());
+        System.out.println("Введите время конца:");
+        int newEndHour = Integer.parseInt(scanner.nextLine());
+        Template oldTemplate = person.getTimetables().get(inputNumber).getTemplate();
+        Timetable editedTimetable = new Timetable(newWeekDay, newStartHour, newEndHour, oldTemplate);
+        person.deleteTimetable(inputNumber);
+        person.addTimetable(editedTimetable);
+        System.out.println(String.format("Расписание %d было изменено", inputNumber));
+        cycleInfo = elementDescription();
     }
 }

@@ -22,7 +22,33 @@ public class DataLoader {
         roster.roles = loadRoles();
         roster.persons = loadPersons(roster.roles);
         roster.templates = loadTemplates(roster.roles);
+        loadTimetables(roster.persons, roster.templates);
         return roster;
+    }
+
+    private static void loadTimetables(ElementCollection persons, ElementCollection templates) {
+        try {
+            File file = new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\timetables.tsv");
+            BufferedReader in = new BufferedReader(new FileReader( file.getAbsoluteFile()));
+            try {
+                String s;
+                while ((s = in.readLine()) != null) {
+                    String[] singleVar = s.split("\t");
+                    Template temp = (Template) templates.get(singleVar[4]);
+                    Timetable timetable = new Timetable(singleVar[1], Integer.parseInt(singleVar[2]), Integer.parseInt(singleVar[3]), temp);
+                    IHaveName tempPerson = persons.get(singleVar[0]);
+                    IHaveName tempTolik = persons.get("Толик");
+                    Person person = (Person) tempPerson;
+                    person.addTimetable(timetable);
+                }
+            }
+            finally {
+                in.close();
+            }
+        }
+        catch(IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static ElementCollection loadTemplates(ElementCollection roles) {

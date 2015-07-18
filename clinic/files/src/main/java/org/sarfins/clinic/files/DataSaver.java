@@ -14,6 +14,7 @@ public class DataSaver {
     public static void save(Roster roster) throws IOException {
         savePersons(roster.persons);
         saveRoles(roster.roles);
+        saveTimetables(roster.persons);
         saveTemplates(roster.templates);
     }
 
@@ -55,14 +56,18 @@ public class DataSaver {
         bw.close();
     }
 
-    private static void saveTimetables(ElementCollection timetables) throws  IOException {
+    private static void saveTimetables(ElementCollection persons) throws  IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(new File("C:\\Users\\Yakov\\IdeaProjects\\Java\\clinic\\timetables.tsv"), false));
-        for(IHaveName timetable: timetables.values()) {
-            bw.write(timetable.getWeekDay());
-            bw.write("\t" + timetable.getStartHour());
-            bw.write("\t" + timetable.getEndHour());
-            bw.write("\t" + timetable.getTemplate().getName());
-            bw.newLine();
+        for(IHaveName person: persons.values()) {
+            Person tmpPerson = (Person) person;
+            for(Timetable timetable : tmpPerson.getTimetables()) {
+                bw.write(person.getName());
+                bw.write("\t" + timetable.getWeekDay());
+                bw.write("\t" + timetable.getStartHour());
+                bw.write("\t" + timetable.getEndHour());
+                bw.write("\t" + timetable.getTemplate().getName());
+                bw.newLine();
+            }
         }
         bw.close();
     }

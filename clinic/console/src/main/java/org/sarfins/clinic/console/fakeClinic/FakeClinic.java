@@ -1,6 +1,8 @@
 package org.sarfins.clinic.console.fakeClinic;
 
+import org.sarfing.clinic.model.Role;
 import org.sarfing.clinic.model.Roster;
+import org.sarfing.clinic.model.User;
 import org.sarfins.clinic.files.DataLoader;
 import org.sarfins.clinic.files.DataSaver;
 
@@ -12,83 +14,34 @@ import java.util.*;
  */
 public class FakeClinic {
     public static void main(String[] args) throws IOException {
-
-
-        //FakeClinicInit clinicInit = new FakeClinicInit();
         Roster roster = DataLoader.load();
-        //Roster roster = new Roster();
 
-        //SubMenuCycle roleCycle = new SubMenuCycle(roster.roles);
-        //SubMenuCycle personCycle = new SubMenuCycle(roster.persons);
-        //SubMenuCycle templateCycle = new SubMenuCycle(roster.templates);
-        SubMenuCycle subCycle = new SubMenuCycle();
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Введите имя пользователя:");
+        String inputLogin = scanner.nextLine();
+        System.out.println("Введите пароль:");
+        String inputPass = scanner.nextLine();
 
-        while(true) {
-            System.out.printf(outputString());
-            String inputString = scanner.nextLine();
-            if(inputString == "0") {
-                break;
-            }
-            if (inputString.equals("1")) {
-                subCycle.run(roster.roles, roster.roles, roster.templates);
-            }
-            else if (inputString.equals("2")) {
-                subCycle.run(roster.persons, roster.roles, roster.templates);
-            }
-            else if (inputString.equals("3")) {
-                subCycle.run(roster.templates, roster.roles, roster.templates);
-            }
-            else if (inputString.equals("4")) {
-                saveData(roster);
-            }
-            else if (inputString.equals("5")) {
-                Roster tmpRoster = loadData();
-                if(tmpRoster != null)
-                    roster = tmpRoster;
+        User user = (User) roster.users.get(inputLogin);
+        if(user != null && user.passwordOk(inputPass)) {
+            System.out.println("Добро пожаловать, " + user.person.getName());
+            boolean isAdmin = false;
+            for(Role role : user.person.getRoles())
+                if (role.getName().equals("Главврач")) {
+                    isAdmin = true;
+                    break;
+                }
 
+            if(isAdmin) {
+                AdminMenuCycle adminMenuCycle = new AdminMenuCycle();
+                adminMenuCycle.run(roster);
+            }
+            else {
+                System.out.println("Извините, у вас нет доступа к программе");
             }
         }
-    }
-
-    private static Roster loadData() throws IOException {
-        try {
-            return DataLoader.load();
+        else {
+            System.out.println("Не удалось авторизироваться");
         }
-        catch (IOException e) {
-            System.out.println("Ошибка загрузки: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    private static void saveData(Roster roster) throws IOException {
-        try {
-            DataSaver.save(roster);
-        }
-        catch (IOException e) {
-            System.out.println("Ошибка сохранения: " + e.getMessage());
-            throw e;
-        }
-    }
-
-    private static String outputString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Здравствуйте!");
-        sb.append("\r\n");
-        sb.append("Введите:");
-        sb.append("\r\n");
-        sb.append("1 - список ролей");
-        sb.append("\r\n");
-        sb.append("2 - список людей");
-        sb.append("\r\n");
-        sb.append("3 - список шаблонов");
-        sb.append("\r\n");
-        sb.append("4 - сохранить данные");
-        sb.append("\r\n");
-        sb.append("5 - считать данные");
-        sb.append("\r\n");
-        sb.append("0 - выйти из программы");
-        sb.append("\r\n");
-        return sb.toString();
     }
 }

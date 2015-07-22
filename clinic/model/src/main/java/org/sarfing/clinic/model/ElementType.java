@@ -6,5 +6,6 @@ package org.sarfing.clinic.model;
 public enum ElementType {
     Role,
     Person,
-    Template
+    Template,
+    User
 }

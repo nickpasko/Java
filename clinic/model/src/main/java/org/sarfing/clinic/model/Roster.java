@@ -9,6 +9,7 @@ public class Roster {
     public ElementCollection roles;
     public ElementCollection persons;
     public ElementCollection templates;
+    public ElementCollection users;
 
     public Roster() {
         roles = new ElementCollection(new HashMap<String, IHaveName>(), ElementType.Role);

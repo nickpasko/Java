@@ -37,7 +37,8 @@ public class FakeClinic {
                 adminMenuCycle.run(roster);
             }
             else {
-                System.out.println("Извините, у вас нет доступа к программе");
+                WorkerMenuCycle workerMenuCycle = new WorkerMenuCycle();
+                workerMenuCycle.run(user.person.getName(), roster.persons);
             }
         }
         else {
